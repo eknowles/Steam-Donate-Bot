@@ -1,2 +1,6 @@
 .idea
 bots/csgoloot001
+start_csgoloot001.bat
+servers
+*.sentry
+*.cookies
