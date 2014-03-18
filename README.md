@@ -6,12 +6,16 @@ Add the bot and send it a message through Steam chat with the prefix `take` and 
 
 ### Counter-Strike: Global Offensive
 `take cases` - Sends a trade offer asking for all of your Base Grade Containers
+
 `take consumer` - Sends a trade offer asking for all of your Consumer Grade skins (these are usually dropped during games and are of the lowest quality)
 
 ### Steam
 `take cards` - Sends a trade offer asking for all of your Trading Cards
+
 `take icons` - Sends a trade offer asking for all of your Emoticons
+
 `take backgrounds` - Sends a trade offer asking for all of your Backgrounds
+
 `take boosters` - Sends a trade offer asking for all of your Booster Packs
 
 
