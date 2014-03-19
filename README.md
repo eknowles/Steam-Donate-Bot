@@ -31,14 +31,23 @@ Will make a trade request to you will all of it's items in csgo. So far I've ena
 
 ### Control
 `add` - Bot will send you a friend request
+
 `remove` - Bot will remove you from it's friend list
+
 `game 730` - Bot will tell Steam its joined a game (replace 730 with whatever appid you want)
+
 `give csgo` - Bot will send you a trade request of all its items in the game inventory
+
 `pause` - Bot will set its status to Snooze
+
 `unpause` - Bot will set its status to LookingToTrade
+
 `export` - Bot will export a CSV file of its inventory history
+
 `unfriend` - Bot will clean its friend list
+
 `friend` - Bot will add any pending friend requests
+
 `name BOT` - Bot will change its name to BOT (replace BOT with whatever name you want)
 
 
