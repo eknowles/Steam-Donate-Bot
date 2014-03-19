@@ -23,7 +23,6 @@ var cookies = null;
 var canTrade = false;
 var paused = false;
 var autoFriendRemoveTimeout = 10 * 60 * 1000;
-
 var helptext = 'Available Commands:'
 var mycommands = [
     'Steam:',
@@ -36,8 +35,6 @@ var mycommands = [
     'take cases - Base Grade Containers',
     'take consumer - Consumer Grade Skins'
 ];
-
-
 // Turn on timestamps
 winston.remove(winston.transports.Console);
 winston.add(winston.transports.Console, {'timestamp': true});
@@ -55,13 +52,11 @@ if (fs.existsSync(sentryFile)) {
     sentry = fs.readFileSync(sentryFile);
 }
 var bot = new steam.SteamClient();
-
 winston.info("Logging into Steam");
-
 bot.logOn({
-    accountName: secrets.username,
-    password: secrets.password,
-    authCode: secrets.guardCode,
+    accountName  : secrets.username,
+    password     : secrets.password,
+    authCode     : secrets.guardCode,
     shaSentryfile: sentry
 });
 // Continuously try to connect if disconnected
@@ -147,9 +142,11 @@ bot.on('friendMsg', function (userId, message, entryType) {
                 return;
             }
             if (message.indexOf('give ') === 0) {
-                var gameId = message.substring('game '.length);
-                bot.sendMessage(secrets.ownerId, "Making a trade offer for you now...");
-                getmyitems(userId, parseInt(gameId), 2, makeOffer);
+                var game = message.substring('game '.length);
+                var appid = convertGameId(game)[0];
+                var contextid = convertGameId(game)[1];
+                bot.sendMessage(secrets.ownerId, "Making a trade offer for you now " + appid + ", " + contextid + "...");
+                getmyitems(userId, appid, contextid, makeOffer);
                 return;
             }
             if (message.indexOf('name ') === 0) {
@@ -188,19 +185,6 @@ bot.on('friendMsg', function (userId, message, entryType) {
                 case 'add':
                     winston.info("adding " + userId + " as a friend");
                     bot.addFriend(userId);
-                    return;
-                default:
-                    sendHelp(userId);
-                    return;
-            }
-        }
-        else {
-            switch (message) {
-                case 'help':
-                    bot.sendMessage(userId, "You can get some help at http://www.reddit.com/r/LoungeCompanion/ or send a pm to /u/twa8");
-                    return;
-                case 'ts':
-                    bot.sendMessage(userId, "Reddit Games Teamspeak: 173.14.195.150:9988");
                     return;
                 default:
                     sendHelp(userId);
@@ -340,14 +324,20 @@ bot.on('tradeOffers', function (number) {
                     body.response.trade_offers_received.forEach(function (offer) {
                         if (offer.trade_offer_state == 2) {
                             if (offer.items_to_give) {
+                                var itemCount = 0;
+                                for (x in offer.items_to_give) {
+                                    itemCount += 1;
+                                }
                                 if (offer.steamid_other == secrets.ownerId) {
                                     offers.acceptOffer(offer.tradeofferid, function () {
-                                        winston.info('Trade offer from ' +offer.steamid_other + ' with ID=' + offer.tradeofferid + ' was accepted.');
+                                        winston.info('Trade offer from ' + offer.steamid_other + ' with ID=' + offer.tradeofferid + ' was accepted.');
                                         bot.sendMessage(secrets.ownerId, 'Trade offer from ' + offer.steamid_other + ' with ID=' + offer.tradeofferid + ' was accepted.');
                                     });
                                 } else {
                                     offers.declineOffer(offer.tradeofferid, function () {
                                         winston.info('Trade offer from ' + offer.steamid_other + ' with ID=' + offer.tradeofferid + ' was declined.');
+                                        bot.sendMessage(secrets.ownerId, 'User ' + offer.steamid_other + ' tried to steal ' + itemCount + ' items from my inventory');
+                                        bot.sendMessage(offer.steamid_other, 'You tried to take ' + itemCount + ' items from my inventory. I only accept trades that give me items.');
                                     });
                                 }
                             } else {
@@ -369,9 +359,9 @@ bot.on('tradeOffers', function (number) {
         });
     }
 });
-function sendHelp(user){
+function sendHelp(user) {
     bot.sendMessage(user, helptext);
-    for (line in mycommands){
+    for (line in mycommands) {
         bot.sendMessage(user, mycommands[line]);
     }
 }
@@ -445,10 +435,22 @@ function scrap(source, requested, callback) {
         callback(source, botout, botin);
     });
 }
+function convertGameId(game) {
+    switch (game) {
+        case 'csgo':
+            return [730, 2];
+        case 'steam':
+            return [753, 6];
+        case 'tf2':
+            return [440, 2];
+        case 'dota2':
+            return [570, 2];
+    }
+}
 function getmyitems(source, appid, contextid, callback) {
     var returnBotItems = [];
     var nonefornow = [];
-    var shitidontwant = ['Base Grade Container'];
+    var shitidontwant = [];
     offers.loadMyInventory(appid, contextid, function (error, items) {
         for (index in items) {
             if (items[index].type in oc(shitidontwant)) {

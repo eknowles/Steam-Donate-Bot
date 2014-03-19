@@ -1,0 +1,19 @@
+{
+  "name": "Steam-Donations-Bot",
+  "version": "0.0.1",
+  "description": "Steam bot built with Node.js that accept trade offers",
+  "main": "bot.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eknowles/Steam-Donate-Bot.git"
+  },
+  "keywords": [
+    "steam"
+  ],
+  "author": "Edward Knowles",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eknowles/Steam-Donate-Bot/issues"
+  },
+  "homepage": "https://github.com/eknowles/Steam-Donate-Bot"
+}
