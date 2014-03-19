@@ -1,5 +1,8 @@
-# Welcome to Steam Donate Bot.
+# Welcome to Steam Donation Bot.
 Built with Node.js to interface with Steam.
+
+Add my bot and give it a command!
+http://steamcommunity.com/id/loungecompanion
 
 ## Commands
 Add the bot and send it a message through Steam chat with the prefix `take` and it will build you a trade offer.
@@ -18,9 +21,12 @@ Add the bot and send it a message through Steam chat with the prefix `take` and 
 
 `take boosters` - Sends a trade offer asking for all of your Booster Packs
 
+## Admins
+If you want the bot to give you it's inventory you make a simple request via Steam chat. Start with `give` followed by the inventory you want to receive. For example.
 
+```give csgo```
 
-![CS:GO Case](http://cdn.steamcommunity.com/economy/image/IoCCzrHasVcgweSG31itpprMSH_1qr8X9A83nDu-5QHri7U16Mb3RYAY-Hj5OPEogssTOPy1vxPyBDCOOqjyC-TJsj_-0-pOu1X6ZPFkvzuA2UhqkPPxFucOAcw7_6IHvd72Pq-TsELQAq12pSegbJGBCz_6svMc814_niepqQDrg_RiqY31ToM=/62fx62f)![CS:GO Case](http://cdn.steamcommunity.com/economy/image/IoCCzrHasVcgweSG31itpprMSH_1qr8X9A83nDu-5QHri7U16Mb3RYAY-Hj5OPEogssTOPy1vxPyBDCOOqjyC-TJsj_-0-pOu1X6ZPFkvzuA2UhqkPPxFucOAcw7_6IHvd72Pq-TsELQAq12pSegbJGBCz_6svMc814_niepqQDrg_RiqY31ToM=/62fx62f)![CS:GO Case](http://cdn.steamcommunity.com/economy/image/IoCCzrHasVcgweSG31itpprMSH_1qr8X9A83nDu-5QHri7U16Mb3RYAY-Hj5OPEogssTOPy1vxPyBDCOOqjyC-TJsj_-0-pOu1X6ZPFkvzuA2UhqkPPxFucOAcw7_6IHvd72Pq-TsELQAq12pSegbJGBCz_6svMc814_niepqQDrg_RiqY31ToM=/62fx62f)![CS:GO Case](http://cdn.steamcommunity.com/economy/image/IoCCzrHasVcgweSG31itpprMSH_1qr8X9A83nDu-5QHri7U16Mb3RYAY-Hj5OPEogssTOPy1vxPyBDCOOqjyC-TJsj_-0-pOu1X6ZPFkvzuA2UhqkPPxFucOAcw7_6IHvd72Pq-TsELQAq12pSegbJGBCz_6svMc814_niepqQDrg_RiqY31ToM=/62fx62f)![CS:GO Case](http://cdn.steamcommunity.com/economy/image/IoCCzrHasVcgweSG31itpprMSH_1qr8X9A83nDu-5QHri7U16Mb3RYAY-Hj5OPEogssTOPy1vxPyBDCOOqjyC-TJsj_-0-pOu1X6ZPFkvzuA2UhqkPPxFucOAcw7_6IHvd72Pq-TsELQAq12pSegbJGBCz_6svMc814_niepqQDrg_RiqY31ToM=/62fx62f)![CS:GO Case](http://cdn.steamcommunity.com/economy/image/IoCCzrHasVcgweSG31itpprMSH_1qr8X9A83nDu-5QHri7U16Mb3RYAY-Hj5OPEogssTOPy1vxPyBDCOOqjyC-TJsj_-0-pOu1X6ZPFkvzuA2UhqkPPxFucOAcw7_6IHvd72Pq-TsELQAq12pSegbJGBCz_6svMc814_niepqQDrg_RiqY31ToM=/62fx62f)![CS:GO Case](http://cdn.steamcommunity.com/economy/image/IoCCzrHasVcgweSG31itpprMSH_1qr8X9A83nDu-5QHri7U16Mb3RYAY-Hj5OPEogssTOPy1vxPyBDCOOqjyC-TJsj_-0-pOu1X6ZPFkvzuA2UhqkPPxFucOAcw7_6IHvd72Pq-TsELQAq12pSegbJGBCz_6svMc814_niepqQDrg_RiqY31ToM=/62fx62f)![CS:GO Case](http://cdn.steamcommunity.com/economy/image/IoCCzrHasVcgweSG31itpprMSH_1qr8X9A83nDu-5QHri7U16Mb3RYAY-Hj5OPEogssTOPy1vxPyBDCOOqjyC-TJsj_-0-pOu1X6ZPFkvzuA2UhqkPPxFucOAcw7_6IHvd72Pq-TsELQAq12pSegbJGBCz_6svMc814_niepqQDrg_RiqY31ToM=/62fx62f)![CS:GO Case](http://cdn.steamcommunity.com/economy/image/IoCCzrHasVcgweSG31itpprMSH_1qr8X9A83nDu-5QHri7U16Mb3RYAY-Hj5OPEogssTOPy1vxPyBDCOOqjyC-TJsj_-0-pOu1X6ZPFkvzuA2UhqkPPxFucOAcw7_6IHvd72Pq-TsELQAq12pSegbJGBCz_6svMc814_niepqQDrg_RiqY31ToM=/62fx62f)
+Will make a trade request to you will all of it's items in csgo. So far I've enabled `csgo` `tf2` `steam` `dota2`
 
 ## Requirements
 You will have to use `npm install` for most of these execpt for node-steam-tradeoffers.
@@ -32,8 +38,7 @@ You will have to use `npm install` for most of these execpt for node-steam-trade
 * steam
 * steam-trade
 * steam-trade-offers
-* child_process
 
-## Take items by type
+### Take items by type
 If you have items that you just will never use or be able to sell, you can donate them by adding the bot and giving it a command, the bot will check your inventory and make you an offer.
 
