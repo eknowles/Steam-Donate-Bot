@@ -111,9 +111,15 @@ bot.on('friend', function (userId, relationship) {
         winston.info("Added " + userId + " as a friend");
         bot.addFriend(userId);
         setTimeout(function () {
-            bot.sendMessage(userId, "Thanks for adding me! Enter a command or make me a trade offer.");
-            sendHelp();
+            bot.sendMessage(userId, "Thanks for adding me! Enter a command or make me a trade offer. Please make a donation within the next 5 minutes so I can keep my friend list down.");
+            sendHelp(userId);
         }, 1000);
+
+        setTimeout(function () {
+            bot.sendMessage(userId, "If you would like to make a donation again in the future, just make me a trade request or add me to Steam friends!");
+            bot.removeFriend(userId);
+        }, autoFriendRemoveTimeout);
+
     }
     else {
         winston.info("Friend event for " + userId + " type " + relationship);
