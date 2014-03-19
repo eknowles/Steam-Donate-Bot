@@ -29,32 +29,63 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a name="welcome-to-steam-donate-bot" class="anchor" href="#welcome-to-steam-donate-bot"><span class="octicon octicon-link"></span></a>Welcome to Steam Donate Bot.</h1>
+<a name="welcome-to-steam-donation-bot" class="anchor" href="#welcome-to-steam-donation-bot"><span class="octicon octicon-link"></span></a>Welcome to Steam Donation Bot.</h1>
 
 <p>Built with Node.js to interface with Steam.</p>
 
-<h2>
-<a name="choose-items-to-donate" class="anchor" href="#choose-items-to-donate"><span class="octicon octicon-link"></span></a>Choose items to donate</h2>
-
-<p>Simply make a trade offer to the bots public trade url, it will automatically accept or decline.</p>
-
-<h2>
-<a name="take-items-by-type" class="anchor" href="#take-items-by-type"><span class="octicon octicon-link"></span></a>Take items by type</h2>
-
-<p>If you have items that you just will never use or be able to sell, you can donate them by adding the bot and giving it a command, the bot will check your inventory and make you an offer.</p>
+<p>Add my bot and give it a command!
+<a href="http://steamcommunity.com/id/loungecompanion">http://steamcommunity.com/id/loungecompanion</a></p>
 
 <h2>
 <a name="commands" class="anchor" href="#commands"><span class="octicon octicon-link"></span></a>Commands</h2>
 
-<p>Add the bot and send it a message with the prefix <code>take</code> and it will build you a trade offer.</p>
+<p>Add the bot and send it a message through Steam chat with the prefix <code>take</code> and it will build you a trade offer.</p>
 
 <h3>
 <a name="counter-strike-global-offensive" class="anchor" href="#counter-strike-global-offensive"><span class="octicon octicon-link"></span></a>Counter-Strike: Global Offensive</h3>
 
-<p><code>take cases</code> will find all of your Base Grade Containers
-<img src="http://cdn.steamcommunity.com/economy/image/IoCCzrHasVcgweSG31itpprMSH_1qr8X9A83nDu-5QHri7U16Mb3RYAY-Hj5OPEogssTOPy1vxPyBDCOOqjyC-TJsj_-0-pOu1X6ZPFkvzuA2UhqkPPxFucOAcw7_6IHvd72Pq-TsELQAq12pSegbJGBCz_6svMc814_niepqQDrg_RiqY31ToM=/62fx62f" alt="CS:GO Case"></p>
+<p><code>take cases</code> - Sends a trade offer asking for all of your Base Grade Containers</p>
 
-<p><code>take consumer</code> will find all of your Consumer Grade skins, these are usually dropped during games and are of the lowest quality.</p>
+<p><code>take consumer</code> - Sends a trade offer asking for all of your Consumer Grade skins (these are usually dropped during games and are of the lowest quality)</p>
+
+<h3>
+<a name="steam" class="anchor" href="#steam"><span class="octicon octicon-link"></span></a>Steam</h3>
+
+<p><code>take cards</code> - Sends a trade offer asking for all of your Trading Cards</p>
+
+<p><code>take icons</code> - Sends a trade offer asking for all of your Emoticons</p>
+
+<p><code>take backgrounds</code> - Sends a trade offer asking for all of your Backgrounds</p>
+
+<p><code>take boosters</code> - Sends a trade offer asking for all of your Booster Packs</p>
+
+<h2>
+<a name="admins" class="anchor" href="#admins"><span class="octicon octicon-link"></span></a>Admins</h2>
+
+<p>If you want the bot to give you it's inventory you make a simple request via Steam chat. Start with <code>give</code> followed by the inventory you want to receive. For example.</p>
+
+<p><code>give csgo</code></p>
+
+<p>Will make a trade request to you will all of it's items in csgo. So far I've enabled <code>csgo</code> <code>tf2</code> <code>steam</code> <code>dota2</code></p>
+
+<h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<p>You will have to use <code>npm install</code> for most of these execpt for node-steam-tradeoffers.</p>
+
+<ul>
+<li>winston</li>
+<li>cheerio</li>
+<li>node-uuid</li>
+<li>underscore</li>
+<li>crypto</li>
+<li>steam</li>
+<li>steam-trade</li>
+<li>steam-trade-offers</li>
+</ul><h3>
+<a name="take-items-by-type" class="anchor" href="#take-items-by-type"><span class="octicon octicon-link"></span></a>Take items by type</h3>
+
+<p>If you have items that you just will never use or be able to sell, you can donate them by adding the bot and giving it a command, the bot will check your inventory and make you an offer.</p>
         </section>
 
         <aside id="sidebar">
