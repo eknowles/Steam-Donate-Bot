@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Steam Donate Bot : Easy way for friends to donate items to you" />
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>Steam Donate Bot by eknowles</title>
+    <title>Steam Donate Bot</title>
   </head>
 
   <body>
-    <header>
-      <div class="inner">
-        <h1>Steam Donate Bot</h1>
-        <h2>Easy way for friends to donate items to you</h2>
-        <a href="https://github.com/eknowles/Steam-Donate-Bot" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/eknowles/Steam-Donate-Bot">View on GitHub</a>
+
+          <h1 id="project_title">Steam Donate Bot</h1>
+          <h2 id="project_tagline">Easy way for friends to donate items to you</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/eknowles/Steam-Donate-Bot/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/eknowles/Steam-Donate-Bot/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
 <a name="welcome-to-steam-donation-bot" class="anchor" href="#welcome-to-steam-donation-bot"><span class="octicon octicon-link"></span></a>Welcome to Steam Donation Bot.</h1>
 
 <p>Built with Node.js to interface with Steam.</p>
@@ -60,13 +63,30 @@
 <p><code>take boosters</code> - Sends a trade offer asking for all of your Booster Packs</p>
 
 <h2>
-<a name="admins" class="anchor" href="#admins"><span class="octicon octicon-link"></span></a>Admins</h2>
+<a name="admin-commands" class="anchor" href="#admin-commands"><span class="octicon octicon-link"></span></a>Admin Commands</h2>
+
+<h3>
+<a name="get-items" class="anchor" href="#get-items"><span class="octicon octicon-link"></span></a>Get Items</h3>
 
 <p>If you want the bot to give you it's inventory you make a simple request via Steam chat. Start with <code>give</code> followed by the inventory you want to receive. For example.</p>
 
 <p><code>give csgo</code></p>
 
 <p>Will make a trade request to you will all of it's items in csgo. So far I've enabled <code>csgo</code> <code>tf2</code> <code>steam</code> <code>dota2</code></p>
+
+<h3>
+<a name="control" class="anchor" href="#control"><span class="octicon octicon-link"></span></a>Control</h3>
+
+<p><code>add</code> - Bot will send you a friend request
+<code>remove</code> - Bot will remove you from it's friend list
+<code>game 730</code> - Bot will tell Steam its joined a game (replace 730 with whatever appid you want)
+<code>give csgo</code> - Bot will send you a trade request of all its items in the game inventory
+<code>pause</code> - Bot will set its status to Snooze
+<code>unpause</code> - Bot will set its status to LookingToTrade
+<code>export</code> - Bot will export a CSV file of its inventory history
+<code>unfriend</code> - Bot will clean its friend list
+<code>friend</code> - Bot will add any pending friend requests
+<code>name BOT</code> - Bot will change its name to BOT (replace BOT with whatever name you want)</p>
 
 <h2>
 <a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
@@ -86,26 +106,18 @@
 <a name="take-items-by-type" class="anchor" href="#take-items-by-type"><span class="octicon octicon-link"></span></a>Take items by type</h3>
 
 <p>If you have items that you just will never use or be able to sell, you can donate them by adding the bot and giving it a command, the bot will check your inventory and make you an offer.</p>
-        </section>
-
-        <aside id="sidebar">
-          <a href="https://github.com/eknowles/Steam-Donate-Bot/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/eknowles/Steam-Donate-Bot/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/eknowles/Steam-Donate-Bot"></a> is maintained by <a href="https://github.com/eknowles">eknowles</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+      </section>
     </div>
 
-            <script type="text/javascript">
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Steam Donate Bot maintained by <a href="https://github.com/eknowles">eknowles</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -115,6 +127,7 @@
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
