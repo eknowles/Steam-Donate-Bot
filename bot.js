@@ -1,4 +1,5 @@
 var botuser = process.argv[2];
+var otherid = process.argv[3];
 var botfolder = 'bots/';
 var csgoid = '730';
 var playThese = ['10', '570', '440'];
@@ -114,12 +115,10 @@ bot.on('friend', function (userId, relationship) {
             bot.sendMessage(userId, "Thanks for adding me! Enter a command or make me a trade offer. Please make a donation within the next 5 minutes so I can keep my friend list down.");
             sendHelp(userId);
         }, 1000);
-
         setTimeout(function () {
             bot.sendMessage(userId, "If you would like to make a donation again in the future, just make me a trade request or add me to Steam friends!");
             bot.removeFriend(userId);
         }, autoFriendRemoveTimeout);
-
     }
     else {
         winston.info("Friend event for " + userId + " type " + relationship);
@@ -151,6 +150,10 @@ bot.on('friendMsg', function (userId, message, entryType) {
                 var game = message.substring('game '.length);
                 var appid = convertGameId(game)[0];
                 var contextid = convertGameId(game)[1];
+                if (appid === 0) {
+                    bot.sendMessage(secrets.ownerId, "There was a problem with your command.");
+                    return;
+                }
                 bot.sendMessage(secrets.ownerId, "Making a trade offer for you now " + appid + ", " + contextid + "...");
                 getmyitems(userId, appid, contextid, makeOffer);
                 return;
@@ -320,7 +323,7 @@ bot.on('sessionStart', function (steamId) {
     }
 });
 bot.on('tradeOffers', function (number) {
-    winston.info('tradeOffers hit with a code ' + number);
+    winston.info('Active trades: ' + number);
     if (number > 0) {
         offers.getOffers({get_received_offers: 1, active_only: 1, get_descriptions: 1}, function (error, body) {
             if (error) {
@@ -351,6 +354,9 @@ bot.on('tradeOffers', function (number) {
                                     winston.info('Trade offer from ' + offer.steamid_other + ' with ID=' + offer.tradeofferid + ' was accepted.');
                                     bot.sendMessage(secrets.ownerId, 'Trade offer from ' + offer.steamid_other + ' with ID=' + offer.tradeofferid + ' was accepted.');
                                     if (offer.message) {
+                                        if (offer.message === 'return') {
+                                            console.log(offer.items_to_recieve);
+                                        }
                                         bot.sendMessage(secrets.ownerId, 'Message: ' + offer.message);
                                     }
                                     for (item in offer.items_to_receive) {
@@ -376,69 +382,61 @@ function scrap(source, requested, callback) {
     var botout = [];
     var scrap = [];
     var filtertype = 1; // 1= .type 2= tags[2].name
-    if (requested == 'cases') {
+    if (requested === 'cases') {
         appid = 730;
         contextid = 2;
         scrap.push('Base Grade Container');
         filtertype = 1;
-    } else if (requested == 'consumer') {
+    } else if (requested === 'consumer') {
         appid = 730;
         contextid = 2;
         scrap.push('Consumer Grade');
         filtertype = 3;
-    } else if (requested == 'cards') {
+    } else if (requested === 'cards') {
         appid = 753;
         contextid = 6;
         scrap.push('Trading Card');
         filtertype = 2;
-    } else if (requested == 'icons') {
+    } else if (requested === 'icons') {
         appid = 753;
         contextid = 6;
         scrap.push('Emoticon');
         filtertype = 2;
-    } else if (requested == 'backgrounds') {
+    } else if (requested === 'backgrounds') {
         appid = 753;
         contextid = 6;
         scrap.push('Profile Background');
         filtertype = 2;
-    } else if (requested == 'boosters') {
+    } else if (requested === 'boosters') {
         appid = 753;
         contextid = 6;
         scrap.push('Booster Pack');
         filtertype = 2;
+    } else if (requested === 'nonconsumer') {
+        appid = 730;
+        contextid = 2;
+        scrap.push(
+            'High Grade',
+            'Industrial Grade',
+            'Mil-Spec Grade',
+            'Restricted',
+            'Classified',
+            'Extraordinary'
+        );
+        filtertype = 3;
     }
     offers.loadPartnerInventory(source, appid, contextid, function (error, items) {
+        console.log(scrap);
         for (index in items) {
-            if (filtertype == 1) {
-                if (items[index].type in oc(scrap)) {
-                    botin.push({
-                        "appid"    : parseInt(items[index].appid),
-                        "contextid": parseInt(items[index].contextid),
-                        "amount"   : parseInt(items[index].amount),
-                        "assetid"  : items[index].id
-                    });
-                }
-            } else if (filtertype == 2) {
-                if (items[index]['tags'][2].name in oc(scrap)) {
-                    botin.push({
-                        "appid"    : parseInt(items[index].appid),
-                        "contextid": parseInt(items[index].contextid),
-                        "amount"   : parseInt(items[index].amount),
-                        "assetid"  : items[index].id
-                    });
-                }
-            } else if (filtertype == 3) {
-                if (items[index]['tags'][1].name in oc(scrap)) {
-                    botin.push({
-                        "appid"    : parseInt(items[index].appid),
-                        "contextid": parseInt(items[index].contextid),
-                        "amount"   : parseInt(items[index].amount),
-                        "assetid"  : items[index].id
-                    });
-                }
-            }
+            console.log(items[index]);
+            botin.push({
+                "appid"    : parseInt(items[index].appid),
+                "contextid": parseInt(items[index].contextid),
+                "amount"   : parseInt(items[index].amount),
+                "assetid"  : items[index].id
+            });
         }
-        callback(source, botout, botin);
+        callback(source, botout, botin, 'Example Message');
     });
 }
 function convertGameId(game) {
@@ -451,26 +449,63 @@ function convertGameId(game) {
             return [440, 2];
         case 'dota2':
             return [570, 2];
+        default:
+            return [0, 0];
     }
 }
-function getmyitems(source, appid, contextid, callback) {
-    var returnBotItems = [];
-    var nonefornow = [];
-    var shitidontwant = [];
+function giveContainers(source, appid, contextid) {
     offers.loadMyInventory(appid, contextid, function (error, items) {
+        console.log('loadMyInventory');
         for (index in items) {
-            if (items[index].type in oc(shitidontwant)) {
-                // do nothing
-            } else {
-                returnBotItems.push({
-                    "appid"    : parseInt(items[index].appid),
-                    "contextid": parseInt(items[index].contextid),
-                    "amount"   : parseInt(items[index].amount),
-                    "assetid"  : items[index].id
+            var Item = items[index];
+            if (Item.market_name === 'Sticker Capsule') {
+                offers.makeOffer({
+                    partnerSteamId: source,
+                    itemsFromMe   : [
+                        {   "appid"    : parseInt(Item.appid),
+                            "contextid": parseInt(Item.contextid),
+                            "amount"   : parseInt(Item.amount),
+                            "assetid"  : Item.id
+                        }
+                    ],
+                    itemsFromThem : [],
+                    message       : 'return'
+                }, function (error, object) {
+                    if (error === null) {
+                        winston.info("Trade offer send to  " + source + " Trade offer id: " + object.tradeofferid);
+                    } else {
+                        winston.info("Error in created trade offer: " + error);
+                    }
                 });
             }
         }
-        callback(source, returnBotItems, nonefornow);
+    });
+}
+function getmyitems(source, appid, contextid, callback) {
+    var returnBotItems = [];
+    var nonTradables = 0;
+    var numItems = 0;
+    offers.loadMyInventory(appid, contextid, function (error, items) {
+        for (index in items) {
+            var Item = items[index];
+            if (Item.tradable === 0) {
+                nonTradables += 1;
+                continue
+            } else {
+                numItems += 1;
+            }
+            returnBotItems.push({
+                "appid"    : parseInt(Item.appid),
+                "contextid": parseInt(Item.contextid),
+                "amount"   : parseInt(Item.amount),
+                "assetid"  : Item.id
+            });
+        }
+        bot.sendMessage(source, numItems + ' item(s) added...');
+        if (nonTradables > 0) {
+            bot.sendMessage(source, nonTradables + ' item(s) could not be traded');
+        }
+        callback(source, returnBotItems, []);
     });
 }
 function makeOffer(source, botItemOffer, theirItemOffer, message) {
@@ -483,7 +518,7 @@ function makeOffer(source, botItemOffer, theirItemOffer, message) {
         if (error === null) {
             winston.info("Trade offer send to  " + source + " Trade offer id: " + object.tradeofferid);
             bot.sendMessage(source, "I've sent you a trade offer with the item(s): https://steamcommunity.com/tradeoffer/" + object.tradeofferid + "/");
-            bot.sendMessage(secrets.ownerId, object.tradeofferid + " Trade offer send to: " + bot.users[source].playerName);
+            bot.sendMessage(secrets.ownerId, object.tradeofferid + " Trade offer send to: " + source);
         } else {
             winston.info("Error in created trade offer: " + error);
             bot.sendMessage(source, "Error in making trade offer: " + error);
