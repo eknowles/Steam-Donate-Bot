@@ -4,6 +4,8 @@ Built with Node.js to interface with Steam.
 Add my bot and give it a command!
 http://steamcommunity.com/id/loungecompanion
 
+http://i.gyazo.com/03c73a770b5f05fabac94692844fc3a6.png
+
 ## Commands
 Add the bot and send it a message through Steam chat with the prefix `take` and it will build you a trade offer.
 
